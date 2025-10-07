@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia - Część 2</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .image-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .current-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading {
+            opacity: 0.5;
+        }
+        
+        .image-preload {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .nav-button:hover {
+            background: #555;
+        }
+        
+        .close-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .counter {
+            min-width: 100px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="image-container">
+            <img class="current-image" src="" alt="Презентация">
+        </div>
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn">◀</button>
+            <span class="counter" id="counter">1 / 50</span>
+            <button class="nav-button" id="nextBtn">▶</button>
+            <button class="close-button" id="closeBtn">✕</button>
+        </div>
+    </div>
+
+    <script src="../js/presentation.js"></script>
+    <script>
+        const imageUrls = ["../images/e511e8f8-985f-4864-9375-8c9f5d67ab91.jpg", "../images/192ec5df-319c-41d5-b2b9-fc2904dad9e2.jpg", "../images/727acb41-62a8-4d26-b5d2-19960b22f262.jpg", "../images/42886270-bd9c-49b4-b4b9-a1a0130084e9.jpg", "../images/8ceddf7a-04bc-4a75-8b5a-e900f6719a04.jpg", "../images/29b66f85-b4c6-49bd-959b-4bafe0fa7882.jpg", "../images/ea7fdf68-a08e-4d3f-8852-d5ce8cd407de.jpg", "../images/0b8f6f09-3df8-436c-89f0-c4bcc46b0256.jpg", "../images/c82afdcd-ebe9-4fc8-813c-64c89d606f65.jpg", "../images/06cddb07-9fd1-4465-b446-ca2e07ab2d21.jpg", "../images/905c7c58-456a-469a-8464-a12eea78b006.jpg", "../images/2b7e9354-28db-4dc3-b424-2ddfc098a7a7.jpg", "../images/99c847c0-2699-488d-960e-e2289473b293.jpg", "../images/2fdbf2f0-ec38-463a-8a15-09f0ac86ee08.jpg", "../images/320e496d-f081-451a-b76e-f4013739a261.jpg", "../images/5711ce41-0827-43d5-89d5-f2baf39e33fe.jpg", "../images/ec9089ce-3ebf-4d17-a916-31d112d19a60.jpg", "../images/abf94d10-918f-4df5-a1d5-175c66b1edad.jpg", "../images/99f6a5a0-8adf-480e-a87b-40a953d96a70.jpg", "../images/988f3bca-bca6-4290-9493-db3409e1be00.jpg", "../images/cab7049e-a768-4fec-acf6-84d3df27da4a.jpg", "../images/b4e49f83-72da-422f-b08a-20aff5f04b4a.jpg", "../images/67202581-1553-4497-821d-44f1659c29fa.jpg", "../images/cf2f8613-c79f-473f-a43e-f4ff406e796b.jpg", "../images/c99c4da5-c5d2-48a1-a3d3-904222324158.jpg", "../images/2ffc9a77-de10-402f-9460-388cadc5d10c.jpg", "../images/2001fc2d-d8bf-45f8-8f6c-219a4371f2e5.jpg", "../images/007cbe8c-44ba-4173-ae0c-4444d7ad6757.jpg", "../images/365e2486-91e5-4aa2-ade1-8e7724bee858.jpg", "../images/51f8b976-66e0-4f62-a90b-d32246fc6070.jpg", "../images/c45b4289-0b4d-420a-9531-a055dac5adb6.jpg", "../images/4afb5cfe-68fc-4718-b3f1-deb8616f7650.jpg", "../images/54cc72c3-0155-488f-9ff8-0705586e5869.jpg", "../images/8787c9f7-dada-4532-9a3f-d9b3ac36fe7a.jpg", "../images/bcd5fdf6-65f9-4b31-aa22-ee9910deee3a.jpg", "../images/3109e524-3447-42bd-a11e-70bc2520f3fe.jpg", "../images/749bcd75-2b58-49b7-8d25-5870016a60bc.jpg", "../images/634f86ee-b7d0-4485-892b-5be9dbc3fa1d.jpg", "../images/9c40ad15-802b-4f07-81ef-f054e89a5143.jpg", "../images/291d6f59-e86d-4950-8014-0c7991b6e0fe.jpg", "../images/a5438e1c-ceda-42fd-8b2d-850bf720ac77.jpg", "../images/8450b0c6-8af7-40fa-bff3-4af91a76224a.jpg", "../images/df156107-3b6a-4099-98fb-d30495b9e0ce.jpg", "../images/c966aac0-2bc3-4d77-b11a-79d719d83775.jpg", "../images/710269e5-2208-42d7-a4ee-50259cb17875.jpg"];
+        
+        // Initialize presentation
+        const presentation = new Presentation(imageUrls);
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomniki</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .image-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .current-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading {
+            opacity: 0.5;
+        }
+        
+        .image-preload {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .nav-button:hover {
+            background: #555;
+        }
+        
+        .close-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .counter {
+            min-width: 100px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="image-container">
+            <img class="current-image" src="" alt="Презентация">
+        </div>
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn">◀</button>
+            <span class="counter" id="counter">1 / 50</span>
+            <button class="nav-button" id="nextBtn">▶</button>
+            <button class="close-button" id="closeBtn">✕</button>
+        </div>
+    </div>
+
+    <script src="../js/presentation.js"></script>
+    <script>
+        const imageUrls = ["../images/9179f17e-54be-47b8-8fa2-83bafe155d00.jpg", "../images/c410cc93-4b98-4086-8e55-e95a695e4835.jpg", "../images/ed579629-208f-4722-9e41-25b8bdedb454.jpg", "../images/16c6494c-6a6f-4658-9dd5-0780b9e24a6e.jpg", "../images/fd7a6444-9c7d-4074-acaa-0ed340601193.jpg", "../images/8eaed41f-4e24-4b1c-bb6f-cdefb646d887.jpg", "../images/89f280d1-6f4c-409a-8f3f-2b3c5fc325dd.jpg", "../images/877955b5-46b2-4a69-b6e9-5769d9afde4a.jpg", "../images/51405325-4234-4a73-8566-2cde7f6e3e64.jpg", "../images/be64631f-f9dd-4579-8330-1a575b4fa9e6.jpg", "../images/50c3782d-d202-4129-9b59-34dadbd89bcf.jpg", "../images/d59faa7d-fa77-4fd8-b99d-632f4632c040.jpg", "../images/372a0f9c-936a-44c5-9334-656eb41bc40e.jpg", "../images/9bdb239d-a1cf-4bed-88ca-a8c3a47312e7.jpg", "../images/685edfd3-815d-4f33-93c5-474624a1f76e.jpg", "../images/c4a197fc-1760-4fe4-b951-94c587da046d.jpg", "../images/0bd25c9e-073e-44a2-9009-51b21131c888.jpg", "../images/f93a4cbe-aeca-422b-8407-ddbcd9bb6c59.jpg", "../images/2c0b1944-d354-4fd3-86d7-cdc36ece1cda.jpg", "../images/b0293abe-2989-4412-bbd0-4dd70ff80ebd.jpg", "../images/8bf2f72b-7330-4bb3-8a23-68b22ae14141.jpg", "../images/69813fa1-c2b6-4a26-be06-a75472cbd5b1.jpg", "../images/2f2a1e1d-c089-43a8-a640-cd49019c5050.jpg", "../images/0e7ae854-5c2f-4516-91eb-280ad7120ea2.jpg", "../images/47108405-4272-425f-b490-2efd55d2a07c.jpg", "../images/a59254fc-2c87-485a-a0bc-c4184d62d57e.jpg", "../images/ae4f8575-a322-4148-862b-24745f00d845.jpg", "../images/35ae1495-e484-4ead-88db-bfcb7a55ec94.jpg", "../images/12c53155-c782-488d-bcc0-a353926897bb.jpg", "../images/8fec5331-128e-4c61-81ad-93c6e8b02986.jpg", "../images/65727c51-be27-43ab-ba8b-3f6521ac25b8.jpg", "../images/9ef631a3-fe71-46a2-9b97-f5b8d067979a.jpg", "../images/a4501fd7-b801-48c8-bf17-7b4eb0d2c00b.jpg", "../images/933d5269-84b4-451c-958e-374a612eae53.jpg", "../images/b172327f-c7fb-4772-b85f-1c4a93f187a7.jpg", "../images/e4930bc4-723c-4d76-ac0a-d6d7db1e11cf.jpg", "../images/eb6a73c1-dc04-4df9-a2ed-ef6a286b7ba5.jpg", "../images/7ad1f273-de9b-4b3c-93ee-21edf40f8864.jpg", "../images/b1b8776b-5b14-4b90-ba04-109e6759e14a.jpg", "../images/51afd8dc-fea4-46a5-89ce-e6b103155a36.jpg", "../images/e274ddd1-9025-40a1-938b-1dbeab6e917c.jpg", "../images/c888f498-9702-4f6a-9451-d1235a4dab4f.jpg", "../images/99ab1dcd-3b82-4893-b4f2-1e2f6f4dd3fa.jpg", "../images/e687738d-f6fd-4095-bf98-cacb106f04ee.jpg", "../images/e6a718e6-9bbb-4a9d-945b-c0a378604b39.jpg", "../images/6a39a531-d034-4b50-8d8d-70a3c3e35736.jpg", "../images/299a6158-36e6-494a-b3fc-168ed59ea274.jpg", "../images/a58027f9-0a63-4415-bbe2-efc6b1ffe1b8.jpg", "../images/ca89e654-174d-4c45-a6aa-4a7d2429d2b6.jpg", "../images/b8fbbcd3-7c97-44e3-b3f4-c897ee7e4d11.jpg", "../images/b71b5ad2-067b-4b54-930f-3e9c8c7776dc.jpg", "../images/63ec0dad-0e9c-424e-86f7-a0ef8f42b5f4.jpg", "../images/42340614-d63d-4b8e-b5c7-996e8885232c.jpg", "../images/3a71f0db-487f-497f-98d4-7eb06cd9d935.jpg", "../images/c1ab39c1-1ad8-401e-bdda-19b38a61ee54.jpg", "../images/18c3ee4e-0afb-4173-83ea-7ccf94258e0e.jpg", "../images/53622fb8-1da6-466a-8ae9-9ba913ea4105.jpg", "../images/66400e2a-0741-4562-83a4-8cd0cbda2e0f.jpg", "../images/2b6d112f-c1da-4509-b347-d3e5d805ab2b.jpg", "../images/b9badfb6-ae45-481a-a55c-f99132132bcf.jpg", "../images/03791cbd-9e01-4ae0-8e76-c5e2feb30028.jpg", "../images/7fbc546c-20d6-4f19-8dec-39f3ed97e7a7.jpg", "../images/c226b885-ab4f-415a-84f7-b7439038a659.jpg"];
+        
+        // Initialize presentation
+        const presentation = new Presentation(imageUrls);
+    </script>
+</body>
+</html>

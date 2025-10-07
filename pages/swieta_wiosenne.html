@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Święta wiosenne</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .image-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .current-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading {
+            opacity: 0.5;
+        }
+        
+        .image-preload {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .nav-button:hover {
+            background: #555;
+        }
+        
+        .close-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .counter {
+            min-width: 100px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="image-container">
+            <img class="current-image" src="" alt="Презентация">
+        </div>
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn">◀</button>
+            <span class="counter" id="counter">1 / 50</span>
+            <button class="nav-button" id="nextBtn">▶</button>
+            <button class="close-button" id="closeBtn">✕</button>
+        </div>
+    </div>
+
+    <script src="../js/presentation.js"></script>
+    <script>
+        const imageUrls = ["../images/461b5d69-01b5-4535-b0af-226f3a92e71b.jpg", "../images/ab950305-74ad-4f92-93df-73986c61477f.jpg", "../images/7796523b-78e0-48d9-b069-95e8a036e373.jpg", "../images/3eae4065-2151-47ea-b88f-63ce00896a40.jpg", "../images/ba555d81-6213-49b8-adae-98a188196ec5.jpg", "../images/a7741f88-75c4-4c73-bc50-a871a07043c8.jpg", "../images/7eee34ff-e412-4f6f-98c2-bff46a911acb.jpg", "../images/6aab3e59-94d3-4fae-a4a7-897ef46d32ac.jpg", "../images/3f0a7588-7c27-4af6-9c4c-efcfa1952fe0.jpg", "../images/d97b6304-efbb-4303-bf2c-20eb3ab19074.jpg", "../images/8b289b22-2a75-4d2b-acbd-76b3f4ab3273.jpg", "../images/873cedcf-8928-4681-b301-ddb3f2c4ed84.jpg", "../images/3df12d5a-566c-483f-851f-89987835a17d.jpg", "../images/b4f03ef1-8afb-409d-a3cb-04e995fc2b14.jpg", "../images/b77f7b72-912e-4067-b9c9-8acb7790248a.jpg", "../images/92312a66-1175-4ba4-8e15-be8738a5bfb3.jpg", "../images/116d1678-4a6a-4586-973e-275b0ad41510.jpg", "../images/e88e0dfb-8fa4-4446-a7d9-08b2f7ceb419.jpg", "../images/0daff0f4-f456-4a29-b2a1-1b2cb35efb90.jpg", "../images/318762c9-9dbc-4e0e-b8f4-ac9b6d4273ef.jpg", "../images/d028b8d3-188d-46d7-8d16-54ac5abab173.jpg", "../images/f5168416-2118-493a-a4b7-43b189a0bc94.jpg", "../images/8fe28cf8-87e8-4594-abfa-6ac794abb479.jpg", "../images/4b142da2-b1e4-4bc4-a96a-c7f9365de645.jpg", "../images/e0ac1a56-866f-414e-abcf-f46b046dc26e.jpg", "../images/1b123955-c900-455e-bea6-61d2a032515d.jpg", "../images/f27ebab3-a951-458a-a087-657da0f9cdf8.jpg", "../images/2d61e435-ab5d-47ff-bc59-3bfe999520b1.jpg", "../images/814d944d-19a0-42b9-b4a9-a31751680d34.jpg", "../images/842adcda-2d37-4f6e-8d91-80ba0262523e.jpg", "../images/8cac79ce-06f8-4e9b-bc15-ca0565c72cec.jpg", "../images/5e5828af-ec7f-433f-b8b7-45b85360fd83.jpg", "../images/f5977469-c675-4fc7-b3d4-3415a64874f9.jpg", "../images/5f4b35bf-0bab-4d47-8747-135bc56f7d49.jpg"];
+        
+        // Initialize presentation
+        const presentation = new Presentation(imageUrls);
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ustrój polityczny</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .image-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .current-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading {
+            opacity: 0.5;
+        }
+        
+        .image-preload {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .nav-button:hover {
+            background: #555;
+        }
+        
+        .close-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .counter {
+            min-width: 100px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="image-container">
+            <img class="current-image" src="" alt="Презентация">
+        </div>
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn">◀</button>
+            <span class="counter" id="counter">1 / 50</span>
+            <button class="nav-button" id="nextBtn">▶</button>
+            <button class="close-button" id="closeBtn">✕</button>
+        </div>
+    </div>
+
+    <script src="../js/presentation.js"></script>
+    <script>
+        const imageUrls = ["../images/f7afd036-2457-4e49-8f18-c47a51599290.jpg", "../images/3b253b39-9c0b-4354-b1fa-0b0398bdb616.jpg", "../images/43fadd13-cd95-4ae2-a705-d3b376a5168d.jpg", "../images/fc74061e-b28f-49e3-8596-016c8fb0cbdd.jpg", "../images/b7ccaf8f-f17b-4c50-bd6d-e552c53421e5.jpg", "../images/f8f3b36a-c96e-422d-9d8a-dd334a6cf4a1.jpg", "../images/45002ed6-13bb-4187-a564-41d9ff0a3032.jpg", "../images/58fdb962-cb2a-4f14-ae31-c952c82ef72d.jpg", "../images/856a1910-af08-4fe0-b846-ef8b622970d3.jpg", "../images/75778fed-a038-4c8c-b325-4e4570bdd4ae.jpg", "../images/c344efeb-d1ac-4a44-8c5d-f94bdff8c8aa.jpg", "../images/7fbba8a4-7b56-4890-b97f-c7339439e047.jpg", "../images/a0f6fc06-be8e-4598-8cd6-e59dca3986b4.jpg", "../images/4beee68d-54d8-4cd1-9e53-8feafa335926.jpg", "../images/b36a5908-029e-46ab-97e5-a9fb1124fcef.jpg", "../images/7e05bbbf-5173-4b59-b859-788acf7d0ef2.jpg", "../images/6950d7b4-a6da-4db1-b629-ff55c9f618da.jpg", "../images/df940032-4b2e-48cd-9c35-6b6a99b88365.jpg", "../images/e522c5a4-ce88-4b4f-9dcf-1fc829b7f597.jpg", "../images/31c12d24-a4d9-4822-ae2b-50fa140c2607.jpg", "../images/3ebc0867-06c1-4a47-8cbc-46677eef3726.jpg", "../images/ebd83d61-cd82-4f3e-9cc9-f9ad4e206cf3.jpg", "../images/c78385e2-9c43-42dd-aa28-b4dacd4ad461.jpg", "../images/5ec70277-c04c-416b-bc9b-e44b08576c16.jpg", "../images/41f5e38f-902e-48c4-a9af-16ce15b556e5.jpg", "../images/6c7ce79a-bc30-4ea2-9853-67475df27678.jpg"];
+        
+        // Initialize presentation
+        const presentation = new Presentation(imageUrls);
+    </script>
+</body>
+</html>

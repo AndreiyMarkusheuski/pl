@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prezentacje - Strona główna</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .presentations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .presentation-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .presentation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .presentation-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .presentation-card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .presentation-card .image-count {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .presentation-card .open-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .presentation-card .open-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .presentations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Prezentacje</h1>
+        <p class="subtitle">Wybierz prezentację do obejrzenia</p>
+        
+        <div class="presentations-grid">
+            <div class="presentation-card" onclick="openPresentation('pages/historia_czesc1.html')">
+                <div class="presentation-card-content">
+                <h3>📖 Historia - Część 1</h3>
+                <p>Pierwsza część materiałów historycznych z ważnymi wydarzeniami i faktami</p>
+                </div>
+                <div>
+                <span class="image-count">50 obrazów</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+
+            <div class="presentation-card" onclick="openPresentation('pages/historia_czesc2.html')">
+                <div class="presentation-card-content">
+                <h3>📖 Historia - Część 2</h3>
+                <p>Kontynuacja materiałów historycznych z dodatkowymi wydarzeniami</p>
+                </div>
+                <div>
+                <span class="image-count">45 obrazów</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+
+            <div class="presentation-card" onclick="openPresentation('pages/informacje_ogolne.html')">
+                <div class="presentation-card-content">
+                <h3>ℹ️ Informacje ogólne</h3>
+                <p>Ogólne informacje i dane referencyjne</p>
+                </div>
+                <div>
+                <span class="image-count">37 obrazów</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+
+            <div class="presentation-card" onclick="openPresentation('pages/pomniki.html')">
+                <div class="presentation-card-content">
+                <h3>🏛️ Pomniki</h3>
+                <p>Pomniki i zabytki historyczne</p>
+                </div>
+                <div>
+                <span class="image-count">63 obrazy</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+
+            <div class="presentation-card" onclick="openPresentation('pages/swieta_jesienne.html')">
+                <div class="presentation-card-content">
+                <h3>🍂 Święta jesienne</h3>
+                <p>Święta i tradycje sezonu jesiennego</p>
+                </div>
+                <div>
+                <span class="image-count">19 obrazów</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+
+            <div class="presentation-card" onclick="openPresentation('pages/swieta_letnie.html')">
+            <div class="presentation-card-content">
+                <h3>☀️ Święta letnie</h3>
+                <p>Święta i tradycje sezonu letniego</p>
+                </div>
+                <div>
+                <span class="image-count">11 obrazów</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+
+            <div class="presentation-card" onclick="openPresentation('pages/swieta_wiosenne.html')">
+                <div class="presentation-card-content">
+                <h3>🌸 Święta wiosenne</h3>
+                <p>Święta i tradycje sezonu wiosennego</p>
+                </div>
+                <div>
+                <span class="image-count">34 obrazy</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+
+            <div class="presentation-card" onclick="openPresentation('pages/swieta_zimowe.html')">
+                <div class="presentation-card-content">
+                <h3>❄️ Święta zimowe</h3>
+                <p>Święta i tradycje sezonu zimowego</p>
+                </div>
+                <div>
+                <span class="image-count">31 obrazów</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+
+            <div class="presentation-card" onclick="openPresentation('pages/ustroj_polityczny.html')">
+                <div class="presentation-card-content">
+                <h3>🏛️ Ustrój polityczny</h3>
+                <p>Informacje o systemie politycznym i ustroju państwa</p>
+                <span class="image-count">26 obrazów</span>
+                <button class="open-btn">Otwórz prezentację</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>To wszystko tylko dla personalnej nauki historii</p>
+        </div>
+    </div>
+
+    <script>
+        function openPresentation(filename) {
+            // Open presentation in the same tab
+            window.location.href = filename;
+        }
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Close any open modals or return to main page
+                window.location.reload();
+            }
+        });
+    </script>
+</body>
+</html>

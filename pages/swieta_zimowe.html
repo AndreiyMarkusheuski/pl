@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Święta zimowe</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .image-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .current-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading {
+            opacity: 0.5;
+        }
+        
+        .image-preload {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .nav-button:hover {
+            background: #555;
+        }
+        
+        .close-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .counter {
+            min-width: 100px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="image-container">
+            <img class="current-image" src="" alt="Презентация">
+        </div>
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn">◀</button>
+            <span class="counter" id="counter">1 / 50</span>
+            <button class="nav-button" id="nextBtn">▶</button>
+            <button class="close-button" id="closeBtn">✕</button>
+        </div>
+    </div>
+
+    <script src="../js/presentation.js"></script>
+    <script>
+        const imageUrls = ["../images/4c23b389-c811-413b-be37-0573c24211ed.jpg", "../images/a62aea41-39e6-45b6-bee7-d4d52846bae9.jpg", "../images/d043afc9-a5ed-44b3-a5c9-30d1983863ea.jpg", "../images/e1bf8959-1125-44c5-80fa-23101bbd5912.jpg", "../images/4f5ad105-0c5e-4ba5-b3b7-23104e52e695.jpg", "../images/fd7515fe-ea63-40ca-957f-2c6ff0f64212.jpg", "../images/d36ce92f-4230-4822-af6b-de1bfe754565.jpg", "../images/91e31321-6afa-4fcd-903c-b0f84bf2c149.jpg", "../images/546d1be2-6b09-458a-b3b7-ece6cb08931f.jpg", "../images/891f1b59-c445-4324-bfbf-400525ad86e6.jpg", "../images/b32115f4-eb2e-4994-844b-eb71716372bf.jpg", "../images/55eb24b6-8807-443c-a217-5abe4b3099fe.jpg", "../images/3101d4f7-1725-42ee-bdc5-b0f3d3f4ae03.jpg", "../images/a533bea6-77a0-457e-92a7-64b925bf2de0.jpg", "../images/285acfa5-ade9-402a-87c9-1698bed12968.jpg", "../images/b22e60bf-44ab-4c0f-b4a8-f3aebe4b5f31.jpg", "../images/0114becb-53e3-4e41-b60a-518d9c8f8abc.jpg", "../images/64593596-d62a-4514-807a-d736f486476c.jpg", "../images/0ee59d26-c6ec-472a-9e62-e2652e05de85.jpg", "../images/4f269278-df34-4277-bc00-a0e65a3e01fa.jpg", "../images/a5e5fae2-3e10-4059-a650-4c95beaf35de.jpg", "../images/70a73db5-475f-4c06-891b-648c7b6e730c.jpg", "../images/1974ca8a-1ce0-486a-bb96-cf4e01594f2c.jpg", "../images/356f3a27-10ec-4ddc-bf28-c2f19377cde8.jpg", "../images/c8914543-763f-4dc1-8979-1a97e0364a99.jpg", "../images/a0bd7b25-ad97-43ea-a748-80446ca64159.jpg", "../images/3ca6ad49-164f-40b0-9035-9cad7f9afdb4.jpg", "../images/f8cb4ebc-9842-4a6a-b6dd-fd1f330e7e58.jpg", "../images/e2b3a8dc-445e-43da-800b-cb164c992d64.jpg", "../images/66d57727-316f-4ff5-a999-1a1756db15cf.jpg", "../images/26e20cef-bb37-4ffa-a662-32c83b2204d1.jpg"];
+        
+        // Initialize presentation
+        const presentation = new Presentation(imageUrls);
+    </script>
+</body>
+</html>
